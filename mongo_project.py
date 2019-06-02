@@ -48,6 +48,33 @@ def add_record():
         print("Error accessing the database")
 
 
+def get_record():
+    print("")
+    first = input("Enter first name > ")
+    last = input("Enter last name > ")
+
+    try:
+        doc = coll.find_one({'first': first.lower(), 'last': last.lower()})
+    except:
+        print("Error accessing the database")
+    
+    if not doc:
+        print("")
+        print("Error! No results found.")
+    
+    return doc
+
+
+def find_record():
+    doc = get_record()
+    if doc:
+        print("")
+        for k, v in doc.items():
+            if k != "_id":
+                print(k.capitalize() + ": " + v.capitalize())
+    
+    
+
 def main_loop():
     while True:
         option = show_menu()
@@ -56,7 +83,7 @@ def main_loop():
             add_record()
         elif option == "2":
             #FIND
-            print("You have selected option 2")
+            find_record()
         elif option == "3":
             #EDIT
             print("You have selected option 3")
